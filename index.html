@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NoteBot Target Manager</title>
+    <style>
+        :root {
+            --bg-dark: #121212;
+            --card-bg: #1e1e1e;
+            --text-main: #ffffff;
+            --text-dim: #b3b3b3;
+            --accent-blue: #4facfe;
+            --danger: #ff4d4d;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header-section { text-align: center; margin-bottom: 40px; }
+        
+        .logo-placeholder {
+            font-size: 50px;
+            background: #2a2a2a;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 20px;
+            margin: 0 auto 15px;
+            border: 1px solid #333;
+        }
+
+        h1 { font-size: 1.5rem; font-weight: 500; letter-spacing: 1px; }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .target-card {
+            background-color: var(--card-bg);
+            border-radius: 18px;
+            padding: 20px;
+            border: 1px solid #2d2d2d;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+        }
+
+        .icon { font-size: 24px; }
+        h2 { font-size: 1rem; margin: 0; color: var(--accent-blue); }
+
+        /* Input Styling */
+        .input-group {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        input {
+            background: #2a2a2a;
+            border: 1px solid #3d3d3d;
+            border-radius: 8px;
+            padding: 10px;
+            color: white;
+            flex: 1;
+            outline: none;
+        }
+
+        input:focus { border-color: var(--accent-blue); }
+
+        .add-btn {
+            background: var(--accent-blue);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0 15px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* List Styling */
+        ul { list-style: none; padding: 0; margin: 0; }
+
+        li {
+            background: #262626;
+            margin-bottom: 10px;
+            padding: 12px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid transparent;
+            transition: 0.2s;
+        }
+
+        li:hover { border-color: #444; }
+
+        .task-text {
+            flex: 1;
+            cursor: pointer;
+            margin-right: 10px;
+            word-break: break-all;
+        }
+
+        .completed {
+            text-decoration: line-through;
+            color: var(--text-dim);
+            opacity: 0.6;
+        }
+
+        .del-btn {
+            background: #333;
+            border: none;
+            color: var(--text-dim);
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .del-btn:hover {
+            background: var(--danger);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-section">
+        <div class="logo-placeholder">📝</div>
+        <h1>NoteBot Web • Targets</h1>
+    </div>
+
+    <div class="grid-container">
+        <div class="target-card" data-type="daily">
+            <div class="card-header">
+                <span class="icon">📅</span>
+                <h2>Daily</h2>
+            </div>
+            <div class="input-group">
+                <input type="text" placeholder="Add daily task..." class="task-input">
+                <button class="add-btn">Add</button>
+            </div>
+            <ul class="task-list" id="daily-list"></ul>
+        </div>
+
+        <div class="target-card" data-type="weekly">
+            <div class="card-header">
+                <span class="icon">📊</span>
+                <h2>Weekly</h2>
+            </div>
+            <div class="input-group">
+                <input type="text" placeholder="Add weekly goal..." class="task-input">
+                <button class="add-btn">Add</button>
+            </div>
+            <ul class="task-list" id="weekly-list"></ul>
+        </div>
+
+        <div class="target-card" data-type="semester">
+            <div class="card-header">
+                <span class="icon">🎓</span>
+                <h2>Semester</h2>
+            </div>
+            <div class="input-group">
+                <input type="text" placeholder="Course target..." class="task-input">
+                <button class="add-btn">Add</button>
+            </div>
+            <ul class="task-list" id="semester-list"></ul>
+        </div>
+
+        <div class="target-card" data-type="yearly">
+            <div class="card-header">
+                <span class="icon">🚀</span>
+                <h2>Yearly</h2>
+            </div>
+            <div class="input-group">
+                <input type="text" placeholder="Yearly vision..." class="task-input">
+                <button class="add-btn">Add</button>
+            </div>
+            <ul class="task-list" id="yearly-list"></ul>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            loadSavedData();
+
+            // Set up all cards
+            document.querySelectorAll('.target-card').forEach(card => {
+                const button = card.querySelector('.add-btn');
+                const input = card.querySelector('.task-input');
+                const list = card.querySelector('.task-list');
+
+                // Add on click
+                button.addEventListener('click', () => {
+                    createTask(input, list);
+                });
+
+                // Add on Enter key
+                input.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        createTask(input, list);
+                    }
+                });
+            });
+        });
+
+        function createTask(input, list) {
+            const text = input.value.trim();
+            if (text === "") return;
+
+            const li = document.createElement('li');
+            li.innerHTML = `
+                <span class="task-text">${text}</span>
+                <button class="del-btn">✕</button>
+            `;
+
+            // Toggle Complete
+            li.querySelector('.task-text').addEventListener('click', function() {
+                this.classList.toggle('completed');
+                saveData();
+            });
+
+            // Delete Task
+            li.querySelector('.del-btn').addEventListener('click', function() {
+                li.remove();
+                saveData();
+            });
+
+            list.appendChild(li);
+            input.value = "";
+            saveData();
+        }
+
+        function saveData() {
+            const storage = {
+                daily: document.getElementById('daily-list').innerHTML,
+                weekly: document.getElementById('weekly-list').innerHTML,
+                semester: document.getElementById('semester-list').innerHTML,
+                yearly: document.getElementById('yearly-list').innerHTML
+            };
+            localStorage.setItem('notebot_v2_data', JSON.stringify(storage));
+        }
+
+        function loadSavedData() {
+            const saved = localStorage.getItem('notebot_v2_data');
+            if (saved) {
+                const data = JSON.parse(saved);
+                
+                // Load HTML content
+                document.getElementById('daily-list').innerHTML = data.daily || "";
+                document.getElementById('weekly-list').innerHTML = data.weekly || "";
+                document.getElementById('semester-list').innerHTML = data.semester || "";
+                document.getElementById('yearly-list').innerHTML = data.yearly || "";
+
+                // Re-attach event listeners to loaded elements
+                document.querySelectorAll('.task-text').forEach(item => {
+                    item.addEventListener('click', function() {
+                        this.classList.toggle('completed');
+                        saveData();
+                    });
+                });
+
+                document.querySelectorAll('.del-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        this.parentElement.remove();
+                        saveData();
+                    });
+                });
+            }
+        }
+    </script>
+</body>
+</html>
